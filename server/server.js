@@ -18,6 +18,8 @@ const apiOptions ={
     },
   };
 
+
+console.log("test")
   async function getYelpApi(){
     const apiInfo = await fetch(yelpUrl, apiOptions)
     const apiInfoResponse = await apiInfo.json();
