@@ -8,10 +8,9 @@ app.listen(3000, '192.168.68.112', () => console.log("Listening at 192.168.68.11
 require('dotenv').config();
 
 const YELP_API_KEY = process.env.YELP_API_KEY;
-console.log(process.env)
-console.log(YELP_API_KEY)
+//console.log(process.env)
+//console.log(YELP_API_KEY)
 
-const yelpUrl = 'https://api.yelp.com/v3/businesses/search?term=restaurants&location=Dublin';
 const apiOptions ={
     headers:{
       Authorization: 'Bearer ' + YELP_API_KEY ,
@@ -19,17 +18,20 @@ const apiOptions ={
   };
 
 
-console.log("test")
-  async function getYelpApi(){
+  async function getYelpApi(transactionType, cityName){
+    const yelpUrl = `https://api.yelp.com/v3/businesses/search?term=Restaurant+${transactionType}&location=${cityName}`;
     const apiInfo = await fetch(yelpUrl, apiOptions)
     const apiInfoResponse = await apiInfo.json();
     //console.log(apiInfoResponse)
     return apiInfoResponse;
-
   }
 
-  app.get('/api', async (request, response) => {
-    const yelpApiInfo = await getYelpApi();
+
+  
+  app.get('/api/:transactionType/:city', async (request, response) => {
+    const transactionType = request.params['transactionType']
+    const cityName = request.params['city']
+    const yelpApiInfo = await getYelpApi(transactionType, cityName);
     response.json(yelpApiInfo)
 
 
