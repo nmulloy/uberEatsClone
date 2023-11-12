@@ -4,11 +4,30 @@ import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplet
 import Ionicons from "react-native-vector-icons/Ionicons";
 import AntDesign from "react-native-vector-icons/AntDesign";
 
+const getGoogleApiKey = async () => {
+    const api_url = 'http://192.168.68.112:3000/googleApi';
+    const response = await fetch(api_url, { mode: 'cors' });
+
+    const data = await response.json();
+    const GoogleAPi = JSON.parse(data)
+    return GoogleAPi.API;
+}
+
 export default function SearchBar({ cityHanlder }) {
+  const [googleApiKey, setGoogleApiKey] = React.useState(null);
+
+  React.useEffect(() => {
+    const fetchApiKey = async () => {
+      const apiKey = await getGoogleApiKey();
+      setGoogleApiKey(apiKey);
+    };
+
+    fetchApiKey();
+  }, []); // Run the effect only once when the component mounts
   return (
     <View style={{ marginTop: 15, flexDirection: "row" }}>
       <GooglePlacesAutocomplete
-        query={{ key: "AIzaSyDb9hASU2eeohpLg26r1vRKV-WqdyBJSYE" }}
+        query={{ key: googleApiKey }}
         placeholder="Search"
         onPress={(data, details = null) => {
           console.log(data.description)

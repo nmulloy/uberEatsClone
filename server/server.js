@@ -8,8 +8,9 @@ app.listen(3000, '192.168.68.112', () => console.log("Listening at 192.168.68.11
 require('dotenv').config();
 
 const YELP_API_KEY = process.env.YELP_API_KEY;
-//console.log(process.env)
-//console.log(YELP_API_KEY)
+const GOOGLE_API = process.env.GOOGLE_API
+console.log(YELP_API_KEY)
+console.log(GOOGLE_API)
 
 const apiOptions ={
     headers:{
@@ -33,16 +34,12 @@ const apiOptions ={
     const cityName = request.params['city']
     const yelpApiInfo = await getYelpApi(transactionType, cityName);
     response.json(yelpApiInfo)
+  })
 
-
-    /*database.find({}, (err, data) => {
-      if (err) {
-        response.end();
-        return;
-      }
-      response.json(data);
-    });*/
-  });
-  
-getYelpApi()
-
+  app.get('/googleApi', async (request, response) => {
+    const googleApi = GOOGLE_API;
+    console.log(googleApi)
+    const googleApi_json = JSON.stringify({API: googleApi })
+    console.log(googleApi_json)
+    response.json(googleApi_json)
+  })
