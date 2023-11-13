@@ -3,20 +3,22 @@ import React from 'react'
 import About from '../components/restaurantDetails/About'
 import { Divider } from 'react-native-elements'
 import MenuItem from '../components/restaurantDetails/MenuItem'
+import ViewCart from '../components/restaurantDetails/ViewCart';
 
-export default function RestaurantDetails({route}) {
+export default function RestaurantDetails({route, navigation}) {
   return (
     <View style = {{
         flex: 1, 
         paddingTop: Platform.OS === 'android' ? 50 : 0,
-        backgroundColor: "#eee"
+        backgroundColor: "#eee",
         }}> 
     <View>
       <About route={route}/>
       <Divider width={1.8} style={{
         marginVertical: 20
       }} />
-      <MenuItem style={{flexGrow:1}}/>
+      <MenuItem restaurantName = {route.params.name}/>
+      <ViewCart navigation={navigation} restaurantName = {route.params.name}/>
     </View>
     </View>
   )

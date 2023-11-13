@@ -38,8 +38,6 @@ const apiOptions ={
 
   app.get('/googleApi', async (request, response) => {
     const googleApi = GOOGLE_API;
-    console.log(googleApi)
     const googleApi_json = JSON.stringify({API: googleApi })
-    console.log(googleApi_json)
     response.json(googleApi_json)
   })
